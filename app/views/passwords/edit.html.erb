@@ -1,6 +1,7 @@
 <% content_for :title, "Choose a new password · Backsoon" %>
 <section class="card mx-auto max-w-md p-6 sm:p-9">
-  <p class="eyebrow">A fresh key</p><h1 class="mt-3 text-3xl font-semibold tracking-tight">Choose a new password.</h1>
+  <p class="eyebrow">A fresh key</p>
+  <h1 class="mt-3 text-3xl font-semibold tracking-tight">Choose a new password.</h1>
   <div class="mt-6"><%= render "shared/errors", record: @user %></div>
   <%= form_with url: password_path(params[:token]), method: :put, class: "space-y-5" do |form| %>
     <div><%= form.label :password, "New password", class: "label" %><%= form.password_field :password, required: true, autocomplete: "new-password", minlength: 12, maxlength: 72, class: "input" %></div>

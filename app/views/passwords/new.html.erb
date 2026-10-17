@@ -1,6 +1,8 @@
 <% content_for :title, "Reset password · Backsoon" %>
 <section class="card mx-auto max-w-md p-6 sm:p-9">
-  <p class="eyebrow">It happens</p><h1 class="mt-3 text-3xl font-semibold tracking-tight">Let’s get you back in.</h1><p class="mt-4 text-sm leading-6 text-muted">Enter your email address to request a password reset link.</p>
+  <p class="eyebrow">It happens</p>
+  <h1 class="mt-3 text-3xl font-semibold tracking-tight">Let’s get you back in.</h1>
+  <p class="mt-4 text-sm leading-6 text-muted">Enter your email address to request a password reset link.</p>
   <%= form_with url: passwords_path, class: "mt-7 space-y-5" do |form| %>
     <div><%= form.label :email_address, "Email address", class: "label" %><%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", maxlength: 254, class: "input" %></div>
     <%= form.submit "Send reset instructions", class: "btn w-full", data: { turbo_submits_with: "Sending…" } %>

@@ -1,7 +1,11 @@
 <% content_for :title, "Record a loan · Backsoon" %>
 <%= render "shared/page_header", title: "A little handoff.", subtitle: "What is going out, who it is going to, and when you would like it back." %>
 <% if @items.empty? || @borrowers.empty? %>
-  <div class="card max-w-2xl p-8"><h2 class="text-xl font-semibold">Let’s get the basics in.</h2><p class="mt-3 text-sm leading-6 text-muted">A loan needs an available item and a person. Add those first, then come back to record the handoff.</p><div class="mt-6 flex flex-wrap gap-3"><%= link_to "Add an item", new_item_path, class: "btn" if @items.empty? %><%= link_to "Add a person", new_borrower_path, class: "btn-secondary" if @borrowers.empty? %><%= link_to "Back to loans", root_path, class: "btn-secondary" %></div></div>
+  <div class="card max-w-2xl p-8">
+    <h2 class="text-xl font-semibold">Let’s get the basics in.</h2>
+    <p class="mt-3 text-sm leading-6 text-muted">A loan needs an available item and a person. Add those first, then come back to record the handoff.</p>
+    <div class="mt-6 flex flex-wrap gap-3"><%= link_to "Add an item", new_item_path, class: "btn" if @items.empty? %><%= link_to "Add a person", new_borrower_path, class: "btn-secondary" if @borrowers.empty? %><%= link_to "Back to loans", root_path, class: "btn-secondary" %></div>
+  </div>
 <% else %>
   <div class="card max-w-3xl p-6 sm:p-8"><%= render "form", loan: @loan %></div>
 <% end %>

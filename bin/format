@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require_relative "../config/boot"
+
+options = ARGV.delete("--write") ? [] : [ "--lint-only" ]
+files = Dir.glob(File.expand_path("../app/views/**/*.erb", __dir__))
+exec Gem.bin_path("htmlbeautifier", "htmlbeautifier"), *options, "--stop-on-errors", *files

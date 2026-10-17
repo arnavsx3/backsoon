@@ -1,5 +1,10 @@
 <% if loans.any? %>
-  <div class="card divide-y divide-line"><% loans.each do |loan| %><%= link_to loan, class: "flex flex-wrap items-center justify-between gap-4 p-5 hover:bg-paper" do %><div><h3 class="text-sm font-semibold"><%= show_item ? loan.item.name : loan.borrower.name %></h3><p class="mt-1 text-xs text-muted">Lent <%= friendly_date(loan.lent_on) %> · Due <%= friendly_date(loan.due_on) %></p></div><span class="badge <%= loan_status_class(loan) %>"><%= loan_status(loan) %></span><% end %><% end %></div>
+  <div class="card divide-y divide-line"><% loans.each do |loan| %><%= link_to loan, class: "flex flex-wrap items-center justify-between gap-4 p-5 hover:bg-paper" do %>
+        <div>
+          <h3 class="text-sm font-semibold"><%= show_item ? loan.item.name : loan.borrower.name %></h3>
+          <p class="mt-1 text-xs text-muted">Lent <%= friendly_date(loan.lent_on) %> · Due <%= friendly_date(loan.due_on) %></p>
+        </div>
+        <span class="badge <%= loan_status_class(loan) %>"><%= loan_status(loan) %></span><% end %><% end %></div>
 <% else %>
   <div class="card p-8 text-sm text-muted">No lending history yet. Every shared thing has a story.</div>
 <% end %>

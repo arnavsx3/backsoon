@@ -1,6 +1,6 @@
 RUN := $(if $(shell command -v mise 2>/dev/null),mise exec --,)
 
-.PHONY: setup dev check test e2e build
+.PHONY: setup dev check test e2e build format
 setup:
 	$(RUN) bin/setup --skip-server
 dev:
@@ -13,3 +13,7 @@ e2e:
 	$(RUN) bin/rails test:system
 build:
 	$(RUN) bin/rails assets:precompile
+
+format:
+	$(RUN) bin/rubocop -a
+	$(RUN) bin/format --write
