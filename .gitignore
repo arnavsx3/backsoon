@@ -1,0 +1,17 @@
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+/config/master.key
+/config/credentials/*.key
+
+# Local dependencies and generated files
+/.bundle/
+/vendor/bundle/
+/log/*
+/tmp/*
+/storage/*
+
+# Editor and operating system files
+.DS_Store
+*.swp
