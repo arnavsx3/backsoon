@@ -1,0 +1,6 @@
+<% content_for :title, "#{@item.name} · Backsoon" %>
+<%= render "shared/page_header", title: @item.name, subtitle: @item.description.presence || "One of your shareable things.", action: { label: "Edit item", url: edit_item_path(@item) } %>
+<div class="mb-8 flex flex-wrap gap-3"><%= link_to "Lend this item", new_loan_path(item_id: @item.id), class: "btn" unless @item.outstanding_loan %><%= link_to "All your things", items_path, class: "btn-secondary" %><%= button_to "Delete item", @item, method: :delete, class: "btn-danger", form: { data: { turbo_confirm: "Delete this item?" } } unless @item.loans.exists? %></div>
+<h2 class="mb-4 text-lg font-semibold">Lending history</h2>
+<%= render "shared/history", loans: @loans, show_item: false %>
+<%= render "shared/pagination" %>

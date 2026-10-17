@@ -1,1 +1,35 @@
 @import "tailwindcss";
+@source "../../views";
+@source "../../helpers";
+
+@theme {
+  --color-paper: #f7f8f5;
+  --color-ink: #22322f;
+  --color-muted: #727c78;
+  --color-line: #e2e7e1;
+  --color-brand: #285b50;
+  --color-coral: #db745d;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+@layer base {
+  body { @apply bg-paper font-sans text-ink antialiased; }
+  button, input, select, textarea { @apply font-[inherit]; }
+  button, a, input, select, textarea { @apply touch-manipulation; }
+  button:enabled, input[type="submit"] { @apply cursor-pointer; }
+  :focus-visible { @apply outline-2 outline-offset-4 outline-brand; }
+}
+
+@layer components {
+  .btn { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#1c453c] disabled:cursor-wait disabled:opacity-60; }
+  .btn-secondary { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-line bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:bg-paper; }
+  .btn-danger { @apply inline-flex min-h-11 items-center justify-center rounded-xl border border-red-200 px-5 py-3 text-sm font-medium text-red-700 hover:bg-red-50; }
+  .input { @apply mt-2 block min-h-12 w-full rounded-xl border border-line bg-white px-3.5 py-3 text-sm text-ink outline-offset-2 placeholder:text-gray-400 focus:border-brand; }
+  .label { @apply block text-sm font-semibold text-ink; }
+  .hint { @apply mt-2 text-xs leading-5 text-muted; }
+  .card { @apply rounded-2xl border border-line bg-white; }
+  .eyebrow { @apply text-[11px] font-bold tracking-[0.18em] text-muted uppercase; }
+  .nav-link { @apply rounded-lg px-3 py-2 text-sm font-medium text-muted transition hover:bg-paper hover:text-ink; }
+  .nav-link-active { @apply bg-[#eaf0e9] text-brand; }
+  .badge { @apply inline-flex shrink-0 items-center rounded-full px-3 py-1 text-xs font-semibold; }
+}

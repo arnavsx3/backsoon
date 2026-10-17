@@ -1,0 +1,6 @@
+<%= render "shared/errors", record: item %>
+<%= form_with model: item, class: "space-y-6" do |form| %>
+  <div><%= form.label :name, "Item name", class: "label" %><%= form.text_field :name, required: true, maxlength: 80, placeholder: "The Creative Act, USB-C charger…", class: "input" %></div>
+  <div><%= form.label :description, "Description (optional)", class: "label" %><%= form.text_area :description, rows: 4, maxlength: 1000, placeholder: "Anything that makes this one yours.", class: "input" %></div>
+  <div class="flex flex-wrap gap-3"><%= form.submit item.persisted? ? "Save changes" : "Add item", class: "btn", data: { turbo_submits_with: "Saving…" } %><%= link_to "Cancel", item.persisted? ? item_path(item) : items_path, class: "btn-secondary" %></div>
+<% end %>

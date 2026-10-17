@@ -1,0 +1,2 @@
+<%= render "shared/page_header", title: "Keep the details straight.", subtitle: "#{@loan.item.name}, with #{@loan.borrower.name}." %>
+<div class="card max-w-3xl p-6 sm:p-8"><%= render "form", loan: @loan %></div>

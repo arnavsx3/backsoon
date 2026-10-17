@@ -1,0 +1,11 @@
+<%= render "shared/errors", record: loan %>
+<%= form_with model: loan, class: "space-y-6" do |form| %>
+  <div class="grid gap-6 sm:grid-cols-2">
+    <div><%= form.label :item_id, "What are you lending?", class: "label" %><%= form.collection_select :item_id, @items, :id, :name, { prompt: "Choose an item" }, required: true, class: "input" %><p class="hint">Only available items are listed. <%= link_to "Add an item", new_item_path, class: "font-semibold text-brand underline" %></p></div>
+    <div><%= form.label :borrower_id, "Who is borrowing it?", class: "label" %><%= form.collection_select :borrower_id, @borrowers, :id, :name, { prompt: "Choose a person" }, required: true, class: "input" %><p class="hint">Someone you know. <%= link_to "Add a person", new_borrower_path, class: "font-semibold text-brand underline" %></p></div>
+    <div><%= form.label :lent_on, "Lent on", class: "label" %><%= form.date_field :lent_on, required: true, max: Date.current.iso8601, class: "input" %></div>
+    <div><%= form.label :due_on, "Expected back", class: "label" %><%= form.date_field :due_on, required: true, class: "input" %></div>
+  </div>
+  <div><%= form.label :notes, "A note for later (optional)", class: "label" %><%= form.text_area :notes, rows: 3, maxlength: 1000, placeholder: "Where you handed it over, a friendly arrangement…", class: "input" %></div>
+  <div class="flex flex-wrap gap-3"><%= form.submit loan.persisted? ? "Save changes" : "Record loan", class: "btn", data: { turbo_submits_with: "Saving…" } %><%= link_to "Cancel", loan.persisted? ? loan_path(loan) : root_path, class: "btn-secondary" %></div>
+<% end %>

@@ -1,0 +1,7 @@
+<% content_for :title, "#{@borrower.name} · Backsoon" %>
+<%= render "shared/page_header", title: @borrower.name, subtitle: @borrower.email.presence || "One of your people.", action: { label: "Edit person", url: edit_borrower_path(@borrower) } %>
+<% if @borrower.notes.present? %><p class="card mb-6 max-w-2xl whitespace-pre-wrap p-6 text-sm leading-7 text-muted"><%= @borrower.notes %></p><% end %>
+<div class="mb-8 flex flex-wrap gap-3"><%= link_to "Lend something", new_loan_path(borrower_id: @borrower.id), class: "btn" %><%= link_to "All your people", borrowers_path, class: "btn-secondary" %><%= button_to "Delete person", @borrower, method: :delete, class: "btn-danger", form: { data: { turbo_confirm: "Delete this person?" } } unless @borrower.loans.exists? %></div>
+<h2 class="mb-4 text-lg font-semibold">Lending history</h2>
+<%= render "shared/history", loans: @loans, show_item: true %>
+<%= render "shared/pagination" %>

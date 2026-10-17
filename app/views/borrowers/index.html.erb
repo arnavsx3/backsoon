@@ -1,0 +1,8 @@
+<% content_for :title, "Your people · Backsoon" %>
+<%= render "shared/page_header", title: "Good company.", subtitle: "The people you trust with your things. Their details stay private to your account.", action: { label: "+ Add a person", url: new_borrower_path } %>
+<% if @borrowers.any? %>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"><% @borrowers.each do |person| %><%= link_to person, class: "card flex items-center gap-4 p-6 transition hover:border-brand" do %><span class="grid size-12 shrink-0 place-items-center rounded-full bg-[#f8ebe5] text-sm font-bold text-[#a05a43]"><%= initials(person.name) %></span><div class="min-w-0"><h2 class="font-semibold wrap-anywhere"><%= person.name %></h2><p class="mt-1 truncate text-xs text-muted"><%= person.email.presence || "A familiar face." %></p></div><% end %><% end %></div>
+  <%= render "shared/pagination" %>
+<% else %>
+  <%= render "shared/empty_state", title: "Who is in your circle?", description: "Add someone you lend things to. All you need is their name.", action: { label: "Add your first person", url: new_borrower_path } %>
+<% end %>

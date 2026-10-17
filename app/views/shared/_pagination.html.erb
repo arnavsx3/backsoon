@@ -1,0 +1,9 @@
+<% if @pagination[:pages] > 1 %>
+  <nav aria-label="Pagination" class="mt-6 flex items-center justify-between gap-3 text-sm">
+    <span class="text-muted">Page <%= @pagination[:page] %> of <%= @pagination[:pages] %> · <%= @pagination[:total] %> records</span>
+    <div class="flex gap-2">
+      <% if @pagination[:page] > 1 %><%= link_to "Previous", url_for(params.permit(:q, :status).to_h.merge(page: @pagination[:page] - 1)), class: "btn-secondary" %><% end %>
+      <% if @pagination[:page] < @pagination[:pages] %><%= link_to "Next", url_for(params.permit(:q, :status).to_h.merge(page: @pagination[:page] + 1)), class: "btn-secondary" %><% end %>
+    </div>
+  </nav>
+<% end %>

@@ -1,0 +1,7 @@
+<%= render "shared/errors", record: borrower %>
+<%= form_with model: borrower, class: "space-y-6" do |form| %>
+  <div><%= form.label :name, "Name", class: "label" %><%= form.text_field :name, required: true, maxlength: 80, placeholder: "A friend, a neighbor, your brother…", class: "input" %></div>
+  <div><%= form.label :email, "Email (optional)", class: "label" %><%= form.email_field :email, maxlength: 254, class: "input" %><p class="hint">A private note for you. Backsoon does not send borrowers reminders.</p></div>
+  <div><%= form.label :notes, "Notes (optional)", class: "label" %><%= form.text_area :notes, rows: 3, maxlength: 1000, class: "input" %></div>
+  <div class="flex flex-wrap gap-3"><%= form.submit borrower.persisted? ? "Save changes" : "Add person", class: "btn", data: { turbo_submits_with: "Saving…" } %><%= link_to "Cancel", borrower.persisted? ? borrower_path(borrower) : borrowers_path, class: "btn-secondary" %></div>
+<% end %>

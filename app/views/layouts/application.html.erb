@@ -1,31 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title><%= content_for(:title) || "Backsoon" %></title>
+    <title><%= content_for(:title).presence || "Backsoon — good things come back." %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Backsoon">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="A little record of what you lend, who has it, and when it is coming back.">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="min-h-screen">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-4">Skip to content</a>
+    <% signed_in = authenticated? %>
+    <header class="border-b border-line bg-white">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-8 gap-y-4 px-5 py-5 sm:px-8">
+        <%= link_to root_path, class: "inline-flex items-center gap-2.5 text-xl font-bold tracking-tight", aria: { label: "Backsoon home" } do %>
+          <span class="grid size-9 place-items-center rounded-xl bg-brand text-lg text-white" aria-hidden="true">↩</span>backsoon<span class="-ml-2 text-coral">.</span>
+        <% end %>
+        <% if signed_in %>
+          <nav aria-label="Main navigation" class="order-3 flex w-full gap-1 sm:order-none sm:w-auto">
+            <%= nav_link "Loans", root_path, %w[home loans loan_returns] %>
+            <%= nav_link "Your things", items_path, %w[items] %>
+            <%= nav_link "People", borrowers_path, %w[borrowers] %>
+          </nav>
+          <div class="ml-auto flex min-w-0 items-center gap-3">
+            <span class="hidden max-w-48 truncate text-xs text-muted md:block"><%= Current.user.email_address %></span>
+            <%= button_to "Sign out", session_path, method: :delete, class: "text-xs font-semibold text-muted hover:text-ink" %>
+          </div>
+        <% else %>
+          <span class="ml-auto hidden text-xs text-muted sm:block">Less remembering. More lending.</span>
+        <% end %>
+      </div>
+    </header>
+    <main id="main" class="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-12">
+      <% flash.each do |type, message| %>
+        <div role="<%= type == "alert" ? "alert" : "status" %>" class="mb-6 rounded-xl border p-4 text-sm <%= type == "alert" ? "border-orange-200 bg-orange-50 text-orange-900" : "border-emerald-200 bg-emerald-50 text-emerald-900" %>"><%= message %></div>
+      <% end %>
       <%= yield %>
     </main>
+    <footer class="mx-auto mt-8 flex max-w-6xl flex-wrap justify-between gap-3 border-t border-line px-5 py-6 text-xs text-muted sm:px-8">
+      <span>Good things find their way back.</span><span>A little less on your mind.</span>
+    </footer>
   </body>
 </html>
