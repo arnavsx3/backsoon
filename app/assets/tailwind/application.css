@@ -5,10 +5,10 @@
 @theme {
   --color-paper: #f7f8f5;
   --color-ink: #22322f;
-  --color-muted: #727c78;
+  --color-muted: #63706b;
   --color-line: #e2e7e1;
   --color-brand: #285b50;
-  --color-coral: #db745d;
+  --color-coral: #b65039;
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -31,5 +31,5 @@
   .eyebrow { @apply text-[11px] font-bold tracking-[0.18em] text-muted uppercase; }
   .nav-link { @apply rounded-lg px-3 py-2 text-sm font-medium text-muted transition hover:bg-paper hover:text-ink; }
   .nav-link-active { @apply bg-[#eaf0e9] text-brand; }
-  .badge { @apply inline-flex shrink-0 items-center rounded-full px-3 py-1 text-xs font-semibold; }
+  .badge { @apply max-w-full wrap-anywhere inline-flex shrink-0 items-center rounded-full px-3 py-1 text-xs font-semibold; }
 }
