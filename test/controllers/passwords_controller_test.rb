@@ -53,11 +53,29 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     token = @user.password_reset_token
     assert_no_changes -> { @user.reload.password_digest } do
       put password_path(token), params: { password: "no", password_confirmation: "match" }
-      assert_redirected_to edit_password_path(token)
+      assert_response :unprocessable_entity
     end
 
-    follow_redirect!
-    assert_notice "Passwords did not match"
+    assert_select "[role=alert]", /Password/
+  end
+
+  test "empty or short replacement passwords are rejected" do
+    token = @user.password_reset_token
+    [ "", "short" ].each do |password|
+      assert_no_changes -> { @user.reload.password_digest } do
+        put password_path(token), params: { password: password, password_confirmation: password }
+      end
+      assert_response :unprocessable_entity
+    end
+  end
+
+  test "successful resets revoke all sessions and invalidate the reset token" do
+    @user.sessions.create!
+    token = @user.password_reset_token
+    put password_path(token), params: { password: "a-new-long-password", password_confirmation: "a-new-long-password" }
+    assert_empty @user.reload.sessions
+    get edit_password_path(token)
+    assert_redirected_to new_password_path
   end
 
   private
