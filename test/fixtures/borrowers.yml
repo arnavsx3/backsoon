@@ -1,0 +1,7 @@
+friend:
+  user: one
+  name: Mira
+  email: mira@example.com
+other:
+  user: two
+  name: Private person

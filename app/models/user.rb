@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
+  has_many :loans, dependent: :destroy
+  has_many :items, dependent: :destroy
+  has_many :borrowers, dependent: :destroy
 
   validates :email_address, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }, length: { maximum: 254 }
   validates :password, length: { minimum: 12, maximum: 72 }, allow_nil: true

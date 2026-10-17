@@ -1,0 +1,10 @@
+book:
+  user: one
+  name: The Creative Act
+  description: Hardcover, with a blue bookmark.
+charger:
+  user: one
+  name: USB-C charger
+other:
+  user: two
+  name: Private camera

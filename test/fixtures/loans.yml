@@ -1,0 +1,19 @@
+outstanding:
+  user: one
+  item: book
+  borrower: friend
+  lent_on: <%= 4.days.ago.to_date %>
+  due_on: <%= 2.days.from_now.to_date %>
+returned:
+  user: one
+  item: charger
+  borrower: friend
+  lent_on: <%= 12.days.ago.to_date %>
+  due_on: <%= 4.days.ago.to_date %>
+  returned_on: <%= 5.days.ago.to_date %>
+private:
+  user: two
+  item: other
+  borrower: other
+  lent_on: <%= 2.days.ago.to_date %>
+  due_on: <%= 1.day.from_now.to_date %>
