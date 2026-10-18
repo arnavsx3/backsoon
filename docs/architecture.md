@@ -41,7 +41,7 @@ Dates use the configured application timezone, defaulting to UTC. SQLite persist
 
 Every lending controller requires authentication. Record lookup is scoped to the current user, including item and borrower IDs submitted in a loan form. Cross-account access returns 404. Views escape user content, forms use Rails’ CSRF protection, and the application has a nonce-based content security policy compatible with import maps and Turbo.
 
-Password reset responses do not disclose whether an address exists. Successful resets revoke existing sessions and invalidate the old reset token. Local development writes messages to files; production delivery is configurable.
+Password reset responses do not disclose whether an address exists. Successful resets revoke existing sessions and invalidate the old reset token. Development and production save messages locally by default, with optional SMTP delivery.
 
 ## Test organization
 

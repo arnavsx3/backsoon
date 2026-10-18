@@ -51,7 +51,7 @@ Ctrl+C stops the development server and Tailwind watcher. Ruby source reloads in
 | --- | --- |
 | Ruby + Rails | Models, validations, controllers, routing, and ERB pages |
 | Active Record + SQLite | Persistent records, migrations, indexes, and ownership constraints |
-| Hotwire: Turbo + Stimulus | Browser navigation, forms, and Rails’ JavaScript integration |
+| Hotwire: Turbo | Browser navigation and form submissions |
 | Tailwind CSS | Responsive layouts and shared interface styles |
 | Puma | HTTP application server |
 | Solid Queue + Solid Cache | Production background jobs and cache, backed by SQLite |
@@ -69,7 +69,7 @@ app/
 ├── views/                  # ERB screens and shared partials
 ├── helpers/                # Display labels, dates, navigation
 ├── assets/tailwind/        # Tailwind theme and reusable styles
-├── javascript/             # Hotwire imports and Stimulus setup
+├── javascript/             # Turbo import
 └── mailers/                # Password recovery messages
 bin/                        # Setup, development, checks, and Rails commands
 config/                     # Routes, environments, database, jobs, and CSP
