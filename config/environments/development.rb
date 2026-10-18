@@ -1,8 +1,22 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  config.action_mailer.delivery_method = :file
-  config.action_mailer.file_settings = { location: Rails.root.join("tmp/mails") }
+  if ENV["SMTP_ADDRESS"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV.fetch("SMTP_ADDRESS"),
+      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      domain: ENV.fetch("APP_HOST", "localhost"),
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"],
+      authentication: ENV["SMTP_USERNAME"].present? ? :plain : nil,
+      enable_starttls_auto: true,
+      openssl_verify_mode: "peer"
+    }.compact
+  else
+    config.action_mailer.delivery_method = :file
+    config.action_mailer.file_settings = { location: Rails.root.join("tmp/mails") }
+  end
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -31,14 +45,14 @@ Rails.application.configure do
   # Change to :null_store to avoid any caching.
   config.cache_store = :memory_store
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # Surface provider errors when real SMTP delivery is enabled locally.
+  config.action_mailer.raise_delivery_errors = ENV["SMTP_ADDRESS"].present?
 
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
 
   # Set localhost to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  config.action_mailer.default_url_options = { host: "localhost", port: ENV.fetch("PORT", 3000).to_i }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

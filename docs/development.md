@@ -22,7 +22,7 @@ If Ruby is missing, follow the [Rails installation guide](https://guides.rubyonr
 
 Prefix direct Ruby commands with `mise exec --` if Ruby is not activated in your shell. The Makefile does this automatically when mise is available.
 
-You can change the development port with `PORT=3001 make dev`. Configure the password mailer URL separately if using a custom port. Do not run two app instances against the same development port.
+You can change the development port with `PORT=3001 make dev`. Password-reset links use the same port. Do not run two app instances against the same development port.
 
 ## Persistence and migrations
 
@@ -32,7 +32,23 @@ Development uses `storage/development.sqlite3`; tests use `storage/test.sqlite3`
 
 ## Password resets
 
-In development, Action Mailer saves reset messages under `tmp/mails/`. Submit the reset form, then open the saved message locally and follow its reset link. No email is sent through an external service. Treat those files as private credentials; they are ignored and cleared with temporary files.
+By default, Action Mailer saves development reset messages under `tmp/mails/`. Submit the reset form, then open the saved message locally and follow its reset link. Treat those files as private credentials; they are ignored and cleared with temporary files.
+
+To send real password-reset emails locally, create a private `.env` file in the repository root:
+
+```dotenv
+SMTP_ADDRESS=smtp-relay.brevo.com
+SMTP_PORT=587
+SMTP_USERNAME=your-provider-smtp-login
+SMTP_PASSWORD=your-provider-smtp-key
+MAIL_FROM="Backsoon <your-verified-sender@example.com>"
+```
+
+The SMTP host above is Brevo's relay; use your provider's values. For Brevo, use the SMTP key rather than the API key or account password, and verify the sender in its dashboard. Set owner-only permissions with `chmod 600 .env`. The file is ignored by Git; keep real credentials out of tracked files.
+
+Restart `make dev` after changing the file. Foreman loads `.env` into the web process. A nonblank `SMTP_ADDRESS` enables SMTP with STARTTLS and certificate verification, and delivery errors appear in the development log. Removing that setting restores local file delivery. Automated tests always use Rails' test delivery adapter.
+
+Test delivery by requesting a reset for an existing account whose inbox you control. Development links point to localhost, so open them on the machine running Backsoon. SMTP sends the message; it does not expose your local app to the internet.
 
 Production can deliver resets through SMTP, or retain messages in its private storage directory. See [deployment](deployment.md).
 
@@ -58,7 +74,7 @@ The first run may download a browser or driver. Screenshots appear in `tmp/scree
 | `SOLID_QUEUE_IN_PUMA` | Unset | Enable the production background worker inside Puma |
 | `CHROME_BIN` | Selenium discovery | Browser binary for system tests |
 
-`.env.example` lists deployment settings. Rails does not automatically load `.env` files; supply variables through your shell, service manager, or container runtime.
+`.env.example` lists configuration names. `make dev` loads `.env` through Foreman. Direct Rails commands and production do not automatically load that file; supply variables through your shell, service manager, or container runtime.
 
 ## Contributing
 

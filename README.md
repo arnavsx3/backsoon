@@ -15,7 +15,7 @@ A private lending tracker built with Ruby on Rails. Lend a book, share a charger
 - Search by item or borrower, with paginated results.
 - Mark an item returned and preserve its lending history.
 - Lend returned items again, while preventing two active loans for the same item.
-- Request a password reset. Development messages are saved locally; production can deliver through SMTP.
+- Request a password reset. Messages are saved locally by default; development and production can deliver through SMTP.
 
 Your data lives in SQLite and survives application restarts. SQLite needs no online account, API key, or separate database server. Borrower email addresses are private contact notes; Backsoon does not send borrowers reminders.
 
